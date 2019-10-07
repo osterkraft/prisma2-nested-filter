@@ -33,6 +33,19 @@ const Post = objectType({
     t.model.content()
     t.model.published()
     t.model.author()
+    t.model.tags({
+      filtering: true
+    })
+  },
+})
+
+const Tag = objectType({
+  name: 'Tag',
+  definition(t) {
+    t.model.id()
+    t.model.createdAt()
+    t.model.updatedAt()
+    t.model.name()
   },
 })
 
@@ -41,6 +54,15 @@ const Query = objectType({
   definition(t) {
     t.crud.post({
       alias: 'post',
+    })
+
+    t.crud.posts({
+      alias: 'posts',
+      filtering: true
+    })
+
+    t.crud.users({
+      alias: 'users',
     })
 
     t.list.field('feed', {
@@ -76,6 +98,8 @@ const Mutation = objectType({
   definition(t) {
     t.crud.createOneUser({ alias: 'signupUser' })
     t.crud.deleteOnePost()
+    
+    t.crud.createOneTag({ alias: 'createTag' })
 
     t.field('createDraft', {
       type: 'Post',
@@ -115,7 +139,7 @@ const Mutation = objectType({
 })
 
 const schema = makeSchema({
-  types: [Query, Mutation, Post, User, nexusPrisma],
+  types: [Query, Mutation, Post, User, Tag, nexusPrisma],
   outputs: {
     typegen: join(__dirname, '../generated/nexus-typegen.ts'),
     schema: join(__dirname, '/schema.graphql'),

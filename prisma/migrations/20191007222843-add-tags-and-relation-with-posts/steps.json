@@ -164,6 +164,150 @@
       },
       "arity": "optional",
       "isUnique": false
+    },
+    {
+      "stepType": "CreateModel",
+      "name": "Tag",
+      "embedded": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Post",
+      "name": "tags",
+      "type": {
+        "Relation": {
+          "to": "Tag",
+          "to_fields": [],
+          "name": "PostToTag",
+          "on_delete": "None"
+        }
+      },
+      "arity": "list",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Tag",
+      "name": "id",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "required",
+      "isUnique": false,
+      "id": {
+        "strategy": "Auto",
+        "sequence": null
+      },
+      "default": {
+        "Expression": [
+          "cuid",
+          "String",
+          []
+        ]
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Tag",
+      "name": "createdAt",
+      "type": {
+        "Base": "DateTime"
+      },
+      "arity": "required",
+      "isUnique": false,
+      "default": {
+        "Expression": [
+          "now",
+          "DateTime",
+          []
+        ]
+      }
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Tag",
+      "name": "updatedAt",
+      "type": {
+        "Base": "DateTime"
+      },
+      "arity": "required",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Tag",
+      "name": "name",
+      "type": {
+        "Base": "String"
+      },
+      "arity": "required",
+      "isUnique": false
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Tag",
+      "name": "post",
+      "type": {
+        "Relation": {
+          "to": "Post",
+          "to_fields": [
+            "id"
+          ],
+          "name": "PostToTag",
+          "on_delete": "None"
+        }
+      },
+      "arity": "optional",
+      "isUnique": false
+    },
+    {
+      "stepType": "UpdateField",
+      "model": "Tag",
+      "name": "name",
+      "arity": "optional"
+    },
+    {
+      "stepType": "UpdateField",
+      "model": "Tag",
+      "name": "name",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Tag",
+      "name": "posts",
+      "type": {
+        "Relation": {
+          "to": "Post",
+          "to_fields": [
+            "id"
+          ],
+          "name": "PostTags",
+          "on_delete": "None"
+        }
+      },
+      "arity": "list",
+      "isUnique": false
+    },
+    {
+      "stepType": "DeleteField",
+      "model": "Tag",
+      "name": "post"
+    },
+    {
+      "stepType": "UpdateField",
+      "model": "Post",
+      "name": "tags",
+      "type": {
+        "Relation": {
+          "to": "Tag",
+          "to_fields": [
+            "id"
+          ],
+          "name": "PostTags",
+          "on_delete": "None"
+        }
+      }
     }
   ]
 }

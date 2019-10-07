@@ -2,14 +2,34 @@
 ### Do not make changes to this file directly
 
 
+input BooleanFilter {
+  equals: Boolean
+  not: Boolean
+}
+
 """DateTime"""
 scalar DateTime
 
 type Mutation {
   createDraft(authorEmail: String, content: String, title: String): Post!
+  createTag(data: TagCreateInput!): Tag!
   deleteOnePost(where: PostWhereUniqueInput!): Post
   publish(id: ID): Post
   signupUser(data: UserCreateInput!): User!
+}
+
+input NullableStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: String
+  notIn: [String!]
+  startsWith: String
 }
 
 type Post {
@@ -18,6 +38,7 @@ type Post {
   createdAt: DateTime!
   id: ID!
   published: Boolean!
+  tags(after: String, before: String, first: Int, last: Int, skip: Int, where: PostTagsWhereInput): [Tag!]
   title: String!
   updatedAt: DateTime!
 }
@@ -27,13 +48,51 @@ input PostCreateManyWithoutPostsInput {
   create: [PostCreateWithoutAuthorInput!]
 }
 
+input PostCreateOneWithoutPostInput {
+  connect: PostWhereUniqueInput
+  create: PostCreateWithoutTagsInput
+}
+
 input PostCreateWithoutAuthorInput {
+  content: String
+  createdAt: DateTime
+  id: ID
+  published: Boolean
+  tags: TagCreateManyWithoutTagsInput
+  title: String!
+  updatedAt: DateTime
+}
+
+input PostCreateWithoutTagsInput {
+  author: UserCreateOneWithoutAuthorInput
   content: String
   createdAt: DateTime
   id: ID
   published: Boolean
   title: String!
   updatedAt: DateTime
+}
+
+input PostTagsFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
+input PostTagsWhereInput {
+  AND: [PostTagsWhereInput!]
+  createdAt: PostTagsFilter
+  id: StringFilter
+  name: StringFilter
+  NOT: [PostTagsWhereInput!]
+  OR: [PostTagsWhereInput!]
+  post: PostTagsWhereInput
+  updatedAt: PostTagsFilter
 }
 
 input PostWhereUniqueInput {
@@ -44,6 +103,78 @@ type Query {
   feed: [Post!]!
   filterPosts(searchString: String): [Post!]!
   post(where: PostWhereUniqueInput!): Post
+  posts(after: String, before: String, first: Int, last: Int, skip: Int, where: QueryFindManyPostWhereInput): [Post!]
+  users(after: String, before: String, first: Int, last: Int, skip: Int): [User!]
+}
+
+input QueryFindManyPostFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
+input QueryFindManyPostWhereInput {
+  AND: [QueryFindManyPostWhereInput!]
+  author: QueryFindManyPostWhereInput
+  content: NullableStringFilter
+  createdAt: QueryFindManyPostFilter
+  id: StringFilter
+  NOT: [QueryFindManyPostWhereInput!]
+  OR: [QueryFindManyPostWhereInput!]
+  published: BooleanFilter
+  tags: QueryFindManyPostFilter
+  title: StringFilter
+  updatedAt: QueryFindManyPostFilter
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+type Tag {
+  createdAt: DateTime!
+  id: ID!
+  name: String!
+  updatedAt: DateTime!
+}
+
+input TagCreateInput {
+  createdAt: DateTime
+  id: ID
+  name: String!
+  post: PostCreateOneWithoutPostInput
+  updatedAt: DateTime
+}
+
+input TagCreateManyWithoutTagsInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateWithoutPostInput!]
+}
+
+input TagCreateWithoutPostInput {
+  createdAt: DateTime
+  id: ID
+  name: String!
+  updatedAt: DateTime
+}
+
+input TagWhereUniqueInput {
+  id: ID
 }
 
 type User {
@@ -58,4 +189,20 @@ input UserCreateInput {
   id: ID
   name: String
   posts: PostCreateManyWithoutPostsInput
+}
+
+input UserCreateOneWithoutAuthorInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateWithoutPostsInput
+}
+
+input UserCreateWithoutPostsInput {
+  email: String!
+  id: ID
+  name: String
+}
+
+input UserWhereUniqueInput {
+  email: String
+  id: ID
 }

@@ -12,6 +12,19 @@ async function main() {
           title: 'Watch the talks from Prisma Day 2019',
           content: 'https://www.prisma.io/blog/z11sg6ipb3i1/',
           published: true,
+          tags: {
+            create: [
+              {
+                name: "Prisma"
+              },
+              {
+                name: "News"
+              },
+              {
+                name: "2019"
+              },
+            ]
+          }
         },
       },
     },
@@ -26,11 +39,31 @@ async function main() {
             title: 'Subscribe to GraphQL Weekly for community news',
             content: 'https://graphqlweekly.com/',
             published: true,
+            tags: {
+              create: [
+                {
+                  name: "GraphQL"
+                },
+                {
+                  name: "News"
+                },
+                {
+                  name: "Cool stuff"
+                },
+              ]
+            }
           },
           {
             title: 'Follow Prisma on Twitter',
             content: 'https://twitter.com/prisma/',
             published: false,
+            tags: {
+              create: [
+                {
+                  name: "Trending"
+                },
+              ]
+            }
           },
         ],
       },
