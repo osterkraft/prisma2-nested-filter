@@ -41,25 +41,12 @@ export interface NexusGenInputs {
     connect?: NexusGenInputs['PostWhereUniqueInput'][] | null; // [PostWhereUniqueInput!]
     create?: NexusGenInputs['PostCreateWithoutAuthorInput'][] | null; // [PostCreateWithoutAuthorInput!]
   }
-  PostCreateOneWithoutPostInput: { // input type
-    connect?: NexusGenInputs['PostWhereUniqueInput'] | null; // PostWhereUniqueInput
-    create?: NexusGenInputs['PostCreateWithoutTagsInput'] | null; // PostCreateWithoutTagsInput
-  }
   PostCreateWithoutAuthorInput: { // input type
     content?: string | null; // String
     createdAt?: any | null; // DateTime
     id?: string | null; // ID
     published?: boolean | null; // Boolean
     tags?: NexusGenInputs['TagCreateManyWithoutTagsInput'] | null; // TagCreateManyWithoutTagsInput
-    title: string; // String!
-    updatedAt?: any | null; // DateTime
-  }
-  PostCreateWithoutTagsInput: { // input type
-    author?: NexusGenInputs['UserCreateOneWithoutAuthorInput'] | null; // UserCreateOneWithoutAuthorInput
-    content?: string | null; // String
-    createdAt?: any | null; // DateTime
-    id?: string | null; // ID
-    published?: boolean | null; // Boolean
     title: string; // String!
     updatedAt?: any | null; // DateTime
   }
@@ -80,7 +67,7 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     NOT?: NexusGenInputs['PostTagsWhereInput'][] | null; // [PostTagsWhereInput!]
     OR?: NexusGenInputs['PostTagsWhereInput'][] | null; // [PostTagsWhereInput!]
-    post?: NexusGenInputs['PostTagsWhereInput'] | null; // PostTagsWhereInput
+    posts?: NexusGenInputs['PostTagsFilter'] | null; // PostTagsFilter
     updatedAt?: NexusGenInputs['PostTagsFilter'] | null; // PostTagsFilter
   }
   PostWhereUniqueInput: { // input type
@@ -126,14 +113,14 @@ export interface NexusGenInputs {
     createdAt?: any | null; // DateTime
     id?: string | null; // ID
     name: string; // String!
-    post?: NexusGenInputs['PostCreateOneWithoutPostInput'] | null; // PostCreateOneWithoutPostInput
+    posts?: NexusGenInputs['PostCreateManyWithoutPostsInput'] | null; // PostCreateManyWithoutPostsInput
     updatedAt?: any | null; // DateTime
   }
   TagCreateManyWithoutTagsInput: { // input type
     connect?: NexusGenInputs['TagWhereUniqueInput'][] | null; // [TagWhereUniqueInput!]
-    create?: NexusGenInputs['TagCreateWithoutPostInput'][] | null; // [TagCreateWithoutPostInput!]
+    create?: NexusGenInputs['TagCreateWithoutPostsInput'][] | null; // [TagCreateWithoutPostsInput!]
   }
-  TagCreateWithoutPostInput: { // input type
+  TagCreateWithoutPostsInput: { // input type
     createdAt?: any | null; // DateTime
     id?: string | null; // ID
     name: string; // String!
@@ -147,19 +134,6 @@ export interface NexusGenInputs {
     id?: string | null; // ID
     name?: string | null; // String
     posts?: NexusGenInputs['PostCreateManyWithoutPostsInput'] | null; // PostCreateManyWithoutPostsInput
-  }
-  UserCreateOneWithoutAuthorInput: { // input type
-    connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
-    create?: NexusGenInputs['UserCreateWithoutPostsInput'] | null; // UserCreateWithoutPostsInput
-  }
-  UserCreateWithoutPostsInput: { // input type
-    email: string; // String!
-    id?: string | null; // ID
-    name?: string | null; // String
-  }
-  UserWhereUniqueInput: { // input type
-    email?: string | null; // String
-    id?: string | null; // ID
   }
 }
 
@@ -184,9 +158,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   BooleanFilter: NexusGenInputs['BooleanFilter'];
   NullableStringFilter: NexusGenInputs['NullableStringFilter'];
   PostCreateManyWithoutPostsInput: NexusGenInputs['PostCreateManyWithoutPostsInput'];
-  PostCreateOneWithoutPostInput: NexusGenInputs['PostCreateOneWithoutPostInput'];
   PostCreateWithoutAuthorInput: NexusGenInputs['PostCreateWithoutAuthorInput'];
-  PostCreateWithoutTagsInput: NexusGenInputs['PostCreateWithoutTagsInput'];
   PostTagsFilter: NexusGenInputs['PostTagsFilter'];
   PostTagsWhereInput: NexusGenInputs['PostTagsWhereInput'];
   PostWhereUniqueInput: NexusGenInputs['PostWhereUniqueInput'];
@@ -195,12 +167,9 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   StringFilter: NexusGenInputs['StringFilter'];
   TagCreateInput: NexusGenInputs['TagCreateInput'];
   TagCreateManyWithoutTagsInput: NexusGenInputs['TagCreateManyWithoutTagsInput'];
-  TagCreateWithoutPostInput: NexusGenInputs['TagCreateWithoutPostInput'];
+  TagCreateWithoutPostsInput: NexusGenInputs['TagCreateWithoutPostsInput'];
   TagWhereUniqueInput: NexusGenInputs['TagWhereUniqueInput'];
   UserCreateInput: NexusGenInputs['UserCreateInput'];
-  UserCreateOneWithoutAuthorInput: NexusGenInputs['UserCreateOneWithoutAuthorInput'];
-  UserCreateWithoutPostsInput: NexusGenInputs['UserCreateWithoutPostsInput'];
-  UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
 }
 
 export interface NexusGenFieldTypes {
@@ -313,7 +282,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Mutation" | "Post" | "Query" | "Tag" | "User";
 
-export type NexusGenInputNames = "BooleanFilter" | "NullableStringFilter" | "PostCreateManyWithoutPostsInput" | "PostCreateOneWithoutPostInput" | "PostCreateWithoutAuthorInput" | "PostCreateWithoutTagsInput" | "PostTagsFilter" | "PostTagsWhereInput" | "PostWhereUniqueInput" | "QueryFindManyPostFilter" | "QueryFindManyPostWhereInput" | "StringFilter" | "TagCreateInput" | "TagCreateManyWithoutTagsInput" | "TagCreateWithoutPostInput" | "TagWhereUniqueInput" | "UserCreateInput" | "UserCreateOneWithoutAuthorInput" | "UserCreateWithoutPostsInput" | "UserWhereUniqueInput";
+export type NexusGenInputNames = "BooleanFilter" | "NullableStringFilter" | "PostCreateManyWithoutPostsInput" | "PostCreateWithoutAuthorInput" | "PostTagsFilter" | "PostTagsWhereInput" | "PostWhereUniqueInput" | "QueryFindManyPostFilter" | "QueryFindManyPostWhereInput" | "StringFilter" | "TagCreateInput" | "TagCreateManyWithoutTagsInput" | "TagCreateWithoutPostsInput" | "TagWhereUniqueInput" | "UserCreateInput";
 
 export type NexusGenEnumNames = never;
 

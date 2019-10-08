@@ -48,27 +48,12 @@ input PostCreateManyWithoutPostsInput {
   create: [PostCreateWithoutAuthorInput!]
 }
 
-input PostCreateOneWithoutPostInput {
-  connect: PostWhereUniqueInput
-  create: PostCreateWithoutTagsInput
-}
-
 input PostCreateWithoutAuthorInput {
   content: String
   createdAt: DateTime
   id: ID
   published: Boolean
   tags: TagCreateManyWithoutTagsInput
-  title: String!
-  updatedAt: DateTime
-}
-
-input PostCreateWithoutTagsInput {
-  author: UserCreateOneWithoutAuthorInput
-  content: String
-  createdAt: DateTime
-  id: ID
-  published: Boolean
   title: String!
   updatedAt: DateTime
 }
@@ -91,7 +76,7 @@ input PostTagsWhereInput {
   name: StringFilter
   NOT: [PostTagsWhereInput!]
   OR: [PostTagsWhereInput!]
-  post: PostTagsWhereInput
+  posts: PostTagsFilter
   updatedAt: PostTagsFilter
 }
 
@@ -157,16 +142,16 @@ input TagCreateInput {
   createdAt: DateTime
   id: ID
   name: String!
-  post: PostCreateOneWithoutPostInput
+  posts: PostCreateManyWithoutPostsInput
   updatedAt: DateTime
 }
 
 input TagCreateManyWithoutTagsInput {
   connect: [TagWhereUniqueInput!]
-  create: [TagCreateWithoutPostInput!]
+  create: [TagCreateWithoutPostsInput!]
 }
 
-input TagCreateWithoutPostInput {
+input TagCreateWithoutPostsInput {
   createdAt: DateTime
   id: ID
   name: String!
@@ -189,20 +174,4 @@ input UserCreateInput {
   id: ID
   name: String
   posts: PostCreateManyWithoutPostsInput
-}
-
-input UserCreateOneWithoutAuthorInput {
-  connect: UserWhereUniqueInput
-  create: UserCreateWithoutPostsInput
-}
-
-input UserCreateWithoutPostsInput {
-  email: String!
-  id: ID
-  name: String
-}
-
-input UserWhereUniqueInput {
-  email: String
-  id: ID
 }
